@@ -27,9 +27,10 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query
                 var insertSql = "INSERT INTO [Category] VALUES (@id, @title, @url, @summary, @order, @description, @featured)";
 
-                //Executando a query e passando os parametros
+                //Abrindo a conexão
                 using (var connection = conn.OpenConection())
                 {
+                    //Executando a query e passando os parametros
                     var rows = connection.Execute(insertSql, new
                     {
                         category.Id,
@@ -63,9 +64,10 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query
                 var insertSql = "INSERT INTO [Category] VALUES (@id, @title, @url, @summary, @order, @description, @featured)";
 
-                //Executando a query e passando os parametros
+                //Abrindo a conexão
                 using (var connection = conn.OpenConection())
                 {
+                    //Executando a query e passando os parametros
                     var rows = connection.Execute(insertSql, new[] {
                         new
                     {
