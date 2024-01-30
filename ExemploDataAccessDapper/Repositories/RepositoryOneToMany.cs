@@ -44,10 +44,11 @@ namespace ExemploDataAccessDapper.Repository
                 //Lista externa que vai ser o retorno do método
                 var careers = new List<Career>();
 
-                /*No tipo do objeto dentro de QUERY() voce deve informar na seguinte ordem <TabelaPrincipal, TabelaDoInnerJoin, TabelaPrincipal>
+                /*No tipo do objeto dentro de QUERY() voce deve informar na seguinte ordem <TabelaPrincipal, TabelaDoJoin, TabelaPrincipal>
                      essa ordem se trata de as duas primeiras serem as tabelas que vão retornar na query e a terceira informando dentro de qual tabela vai ser o retorno
-                    como nesse caso nosso objeto principal é o Career se passa ela */
-                var items = _sqlConnection.Query<Career, CareerItem, Career>(
+                    como nesse caso nosso objeto principal é o Career se passa ela na terceira posição*/
+
+                var items = _sqlConnection.Query<Career, CareerItem, Career>( // lembrando que podem ser N objetos "<Career, CareerItem, Category, Career>" o importante é o ultimo ser sempre o Principal
                     sql,
                     (career, item) => //Aqui voce vai passar o dois objetos que vão ser adicionadas as tabelas
                     {

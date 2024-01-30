@@ -48,7 +48,7 @@ namespace ExemploDataAccessDapper.Repository
         }
 
         //Executando uma procedure que retorna valores
-        public IEnumerable<dynamic> ExecutespGetCoursesByCategory(Guid id)
+        public IEnumerable<dynamic> ExecuteSpGetCoursesByCategory(Guid id)
         {
             try
             {

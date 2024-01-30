@@ -6,6 +6,7 @@
 
 using ExemploDataAccessDapper.Models;
 using ExemploDataAccessDapper.Repository;
+using System.Collections.Generic;
 
 Repository repository = new Repository();
 RepositoryProcedures repositoryProcedures = new RepositoryProcedures();
@@ -17,182 +18,218 @@ RepositoryQueryMultiple repositoryQueryMultiple = new RepositoryQueryMultiple();
 RepositorySelectInAndLike repositorySelectInAndLike = new RepositorySelectInAndLike();
 RepositoryTransaction repositoryTransaction = new RepositoryTransaction();
 
-Category category1 = new Category();
-Category category2 = new Category();
+Category categoryAws = new Category();
+categoryAws.Id = Guid.Parse("0851CC48-7299-4C52-BA19-80BEC48256A4");
+categoryAws.Title = "AWS";
+categoryAws.Url = "aws";
+categoryAws.Summary = "Aprenda tudo sobre AWS.";
+categoryAws.Order = 1;
+categoryAws.Description = "descricao AWS";
+categoryAws.Featured = true;
+
+Category categoryAzure = new Category();
+categoryAzure.Id = Guid.Parse("0851CC48-7299-4C52-BA19-80BEC48256A5");
+categoryAzure.Title = "Azure";
+categoryAzure.Url = "azure";
+categoryAzure.Summary = "Aprenda tudo sobre Azure.";
+categoryAzure.Order = 1;
+categoryAzure.Description = "descricao Azure";
+categoryAzure.Featured = true;
 
 List<Category> categoryList = new List<Category>();
+categoryList.Add(categoryAws);
+categoryList.Add(categoryAzure);
 
-category1.Id = Guid.Parse("0851CC48-7299-4C52-BA19-80BEC48256A4");
-category1.Title = "Test";
-category1.Url = "teste";
-category1.Summary = "teste";
-category1.Order = 1;
-category1.Description = "Test descricao";
-category1.Featured = true;
+//InsertCategory(categoryAws); //OK
+//InsertMultiploCategory(categoryList); //OK
+//UpdateCategory(categoryAws); //OK
+//UpdateMultiploCategory(categoryList);
+//DeleteCategory(categoryAws); //OK
+//DeleteMultiploCategory(categoryList);
 
-category2.Id = Guid.Parse("2D786B71-A360-4FDA-A743-874AAE14C4D8");
-category2.Title = "Test mult";
-category2.Url = "teste mult";
-category2.Summary = "teste mult";
-category2.Order = 1;
-category2.Description = "Test descricao mult";
-category2.Featured = true;
-
-categoryList.Add(category1);
-categoryList.Add(category2);
-
-//Console.WriteLine("----------------------- INSERT ------------------------------------------");
-
-//bool retornoInsert = repository.InsertCategory(category1);
-
-//if (retornoInsert == true)
-//    Console.WriteLine("Inserido com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel inserir!!");
-
-//Console.WriteLine("----------------------- INSERT MULTIPLO ------------------------------------------");
-
-//bool retornoInsertMany = repository.InsertManyCategory(categoryList);
-
-//if (retornoInsertMany == true)
-//    Console.WriteLine("Inserido com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel inserir!!");
-
-//Console.WriteLine("----------------------- UPDATE ------------------------------------------");
-
-//category1.Title = "TesteUpdate";
-
-//bool retornoUpdate = repository.UpdateCategory(category1);
-
-//if (retornoUpdate == true)
-//    Console.WriteLine("Alterado com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel alterar!!");
-
-//Console.WriteLine("----------------------- UPDATE MULTIPLO ------------------------------------------");
-
-//category1.Title = "TesteUpdate";
-//category2.Title = "TesteMultUpdate";
-
-//bool retornoManyUpdate = repository.UpdateManyCategory(categoryList);
-
-//if (retornoManyUpdate == true)
-//    Console.WriteLine("Alterado com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel alterar!!");
-
-//Console.WriteLine("----------------------- DELETE ------------------------------------------");
-
-//bool retornoDelete = repository.DeleteCategory(category1.Id);
-
-//if (retornoDelete == true)
-//    Console.WriteLine("Deletado com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel deletar!!");
-
-//Console.WriteLine("----------------------- DELETE MULTIPLO ------------------------------------------");
-
-//bool retornoManyDelete = repository.DeleteManyCategory(categoryList);
-
-//if (retornoManyDelete == true)
-//    Console.WriteLine("Deletado com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel deletar!!");
-
-//Console.WriteLine("----------------------- LIST SELECT ------------------------------------------");
-
-//var retornoListCategory = repository.SelectListCategory();
-
-//foreach (var item in retornoListCategory)
-//    Console.WriteLine($"{item.Id} - {item.Title}");
-
-//Console.WriteLine("----------------------- ID SELECT ------------------------------------------");
-
-//var retornoCategoryId = repository.SelectCategoryId(Guid.Parse("AF3407AA-11AE-4621-A2EF-2028B85507C4"));
-
-//if (retornoCategoryId != null)
-//    Console.WriteLine($"{retornoCategoryId.Id} - {retornoCategoryId.Title}");
-
-//Console.WriteLine("----------------------- EXECUTE STORED PROCEDURES SEM RETORNO ------------------------------------------");
-
-//var retornoExecuteStoredProcedures = repositoryProcedures.ExecuteSpDeleteStudent(Guid.Parse("AFA1C4F8-CF5C-4972-BD92-5FBC37017F5D"));
-
-//if (retornoExecuteStoredProcedures == true)
-//    Console.WriteLine("Executado com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel executadar!!");
-
-//Console.WriteLine("----------------------- EXECUTE STORED PROCEDURES COM RETORNO  ------------------------------------------");
-
-//var retornoExecuteStoredProceduresReturn = repositoryProcedures.ExecutespGetCoursesByCategory(Guid.Parse("09CE0B7B-CFCA-497B-92C0-3290AD9D5142"));
-
-//foreach (var item in retornoExecuteStoredProceduresReturn)
-//    Console.WriteLine($"{item.Id} - {item.Title}");
-
-//Console.WriteLine("----------------------- EXECUTE SCALAR  ------------------------------------------");
-
-//var retornoExecuteScalar = repositoryExecuteScalar.InsertExecuteScalarCategory(category1);
-
-//Console.WriteLine(retornoExecuteScalar);
-
-//Console.WriteLine("----------------------- EXECUTE VIEW ------------------------------------------");
-
-//var retornoView = repositoryViews.ExecuteVwCourses();
-
-//foreach (var item in retornoView)
-//    Console.WriteLine($"{item.Id} - {item.Title}");
-
-//Console.WriteLine("----------------------- EXECUTE ONE TO ONE  ------------------------------------------");
-
-//var retornoOneToOne = repositoryOneToOne.SelectOneToOne();
-
-//foreach (var item in retornoOneToOne)
-//    Console.WriteLine($"{item.Title} - Curso: {item.Course.Title}");
-
-//Console.WriteLine("----------------------- EXECUTE ONE TO MANY  ------------------------------------------");
-
-//var retornoOneToMany = repositoryOneToMany.SelectOneToMany();
-
-//foreach (var career in retornoOneToMany)
-//{
-//    Console.WriteLine($"{career.Title}");
-//    foreach (var item in career.Items)
-//        Console.WriteLine($" - {item.Title}");
-//}
-
-//Console.WriteLine("----------------------- QUERY MULTIPLE  ------------------------------------------");
-
-//repositoryQueryMultiple.SelectListCategoryAndSelectListCourse();
-
-//Console.WriteLine("----------------------- SELECT IN  ------------------------------------------");
+//ExecuteSpDeleteStudent(Guid.Parse("AFA1C4F8-CF5C-4972-BD92-5FBC37017F5D"));
+//ExecuteSpGetCoursesByCategory(Guid.Parse("09CE0B7B-CFCA-497B-92C0-3290AD9D5142"));
+//ExecuteScalar(categoryAws);
+//ExecuteView();
+//ExecuteOneToOne();
+//ExecuteOneToMany();
+//QueryMultiple();
+//SelectLike("api");
+//BeginTransaction(categoryAws);
 
 //List<Guid> idList = new List<Guid>();
 //idList.Add(Guid.Parse("4327ac7e-963b-4893-9f31-9a3b28a4e72b"));
 //idList.Add(Guid.Parse("e6730d1c-6870-4df3-ae68-438624e04c72"));
 
-//var retornoSelectIn = repositorySelectInAndLike.SelectInCarrer(idList);
+//SelectIN(idList);
+//SelectIdCategory(categoryAws.Id);
+ListSelectCategory();
 
-//foreach (var item in retornoSelectIn)
-//    Console.WriteLine(item.Title);
+void InsertCategory(Category category)
+{
+    bool retornoInsert = repository.InsertCategory(category);
 
-//Console.WriteLine("----------------------- SELECT LIKE  ------------------------------------------");
+    if (retornoInsert == true)
+        Console.WriteLine("Inserido com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel inserir!!");
+}
 
-//var retornoSelectLike = repositorySelectInAndLike.SelectLikeCourse("api");
+void InsertMultiploCategory(List<Category> categories)
+{
+    bool retornoInsertMany = repository.InsertManyCategory(categories);
 
-//foreach (var item in retornoSelectLike)
-//    Console.WriteLine(item.Title);
+    if (retornoInsertMany == true)
+        Console.WriteLine("Inserido com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel inserir!!");
+}
 
-//Console.WriteLine("----------------------- BEGIN TRANSACTION ------------------------------------------");
+void UpdateCategory(Category category)
+{
+    category.Title = "AWS update";
+    bool retornoUpdate = repository.UpdateCategory(category);
 
-//bool retornoInsertBeginTransaction = repositoryTransaction.InsertTransactionCategory(category1);
+    if (retornoUpdate == true)
+        Console.WriteLine("Alterado com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel alterar!!");
+}
 
-//if (retornoInsertBeginTransaction == true)
-//    Console.WriteLine("Inserido com sucesso!!");
-//else
-//    Console.WriteLine("Não foi possivel inserir!!");
+void UpdateMultiploCategory(List<Category> categories)
+{
+    categories[0].Title = "AWS multi update";
+    categories[1].Title = "Azure multi update";
 
-var retornoListCategorytest = repository.SelectListCategory();
+    bool retornoManyUpdate = repository.UpdateManyCategory(categories);
 
-foreach (var item in retornoListCategorytest)
-    Console.WriteLine($"{item.Id} - {item.Title}");
+    if (retornoManyUpdate == true)
+        Console.WriteLine("Alterado com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel alterar!!");
+}
+
+void DeleteCategory(Category category)
+{
+    bool retornoDelete = repository.DeleteCategory(category.Id);
+
+    if (retornoDelete == true)
+        Console.WriteLine("Deletado com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel deletar!!");
+}
+
+void DeleteMultiploCategory(List<Category> categories)
+{
+    bool retornoManyDelete = repository.DeleteManyCategory(categories);
+
+    if (retornoManyDelete == true)
+        Console.WriteLine("Deletado com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel deletar!!");
+}
+
+void ListSelectCategory()
+{
+    var retornoListCategory = repository.SelectListCategory();
+
+    foreach (var item in retornoListCategory)
+        Console.WriteLine($"{item.Id} - {item.Title}");
+}
+
+void SelectIdCategory(Guid id) 
+{
+    var retornoCategoryId = repository.SelectCategoryId(id);
+
+    if (retornoCategoryId != null)
+        Console.WriteLine($"{retornoCategoryId.Id} - {retornoCategoryId.Title}");
+}
+
+void ExecuteSpDeleteStudent(Guid id) 
+{
+    //EXECUTE STORED PROCEDURES SEM RETORNO
+
+    var retornoExecuteStoredProcedures = repositoryProcedures.ExecuteSpDeleteStudent(id);
+
+    if (retornoExecuteStoredProcedures == true)
+        Console.WriteLine("Executado com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel executadar!!");
+}
+
+void ExecuteSpGetCoursesByCategory(Guid id) 
+{
+    //EXECUTE STORED PROCEDURES COM RETORNO
+
+    var retornoExecuteStoredProceduresReturn = repositoryProcedures.ExecuteSpGetCoursesByCategory(id);
+
+    foreach (var item in retornoExecuteStoredProceduresReturn)
+        Console.WriteLine($"{item.Id} - {item.Title}");
+}
+
+void ExecuteScalar(Category category)
+{
+    var retornoExecuteScalar = repositoryExecuteScalar.InsertExecuteScalarCategory(category);
+    Console.WriteLine(retornoExecuteScalar);
+}
+
+void ExecuteView()
+{
+    var retornoView = repositoryViews.ExecuteVwCourses();
+
+    foreach (var item in retornoView)
+        Console.WriteLine($"{item.Id} - {item.Title}");
+}
+
+void ExecuteOneToOne()
+{
+    //Join um pra um (Duas tabelas, uma linha cada uma)
+
+    var retornoOneToOne = repositoryOneToOne.SelectOneToOne();
+
+    foreach (var item in retornoOneToOne)
+        Console.WriteLine($"{item.Title} - Curso: {item.Course.Title}");
+}
+
+void ExecuteOneToMany()
+{
+    //Join um pra muitos (Duas tabelas, uma linha da tabela principal, uma lista da tabela relacionada)
+
+    var retornoOneToMany = repositoryOneToMany.SelectOneToMany();
+
+    foreach (var career in retornoOneToMany)
+    {
+        Console.WriteLine($"{career.Title}");
+        foreach (var item in career.Items)
+            Console.WriteLine($" - {item.Title}");
+    }
+}
+
+void QueryMultiple()
+    => repositoryQueryMultiple.SelectListCategoryAndSelectListCourse();
+
+void SelectIN(List<Guid> listID)
+{
+    var retornoSelectIn = repositorySelectInAndLike.SelectInCarrer(listID);
+
+    foreach (var item in retornoSelectIn)
+        Console.WriteLine(item.Title);
+}
+
+void SelectLike(string palavra)
+{
+    var retornoSelectLike = repositorySelectInAndLike.SelectLikeCourse(palavra);
+
+    foreach (var item in retornoSelectLike)
+        Console.WriteLine(item.Title);
+}
+
+void BeginTransaction(Category category)
+{
+    bool retornoInsertBeginTransaction = repositoryTransaction.InsertTransactionCategory(category);
+
+    if (retornoInsertBeginTransaction == true)
+        Console.WriteLine("Inserido com sucesso!!");
+    else
+        Console.WriteLine("Não foi possivel inserir!!");
+}
