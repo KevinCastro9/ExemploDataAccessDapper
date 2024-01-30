@@ -40,11 +40,11 @@ List<Category> categoryList = new List<Category>();
 categoryList.Add(categoryAws);
 categoryList.Add(categoryAzure);
 
-//InsertCategory(categoryAws); //OK
-//InsertMultiploCategory(categoryList); //OK
-//UpdateCategory(categoryAws); //OK
+//InsertCategory(categoryAws); 
+//InsertMultiploCategory(categoryList); 
+//UpdateCategory(categoryAws); 
 //UpdateMultiploCategory(categoryList);
-//DeleteCategory(categoryAws); //OK
+//DeleteCategory(categoryAws); 
 //DeleteMultiploCategory(categoryList);
 
 //ExecuteSpDeleteStudent(Guid.Parse("AFA1C4F8-CF5C-4972-BD92-5FBC37017F5D"));
