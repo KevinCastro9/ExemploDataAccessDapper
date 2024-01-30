@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 namespace ExemploDataAccessDapper.Connection
 {
     public class Connection
-    {              
-        public Connection() 
-        {
-            
-        }
+    {
+        //Criando a String de conexão
+        private const string connectionString = "Server=localhost,1433;Database=balta;User ID=sa;Password=1q2w3e4r@#$;TrustServerCertificate=True";
+        public Connection() {}
 
         public SqlConnection OpenConection()
         {
@@ -21,9 +20,6 @@ namespace ExemploDataAccessDapper.Connection
 
             /* Lembrar de instalar o Package/Pacote "Microsoft.Data.SqlClient" 
               e o Package/Pacote do Dapper */
-
-            //Criando a String de conexão
-            const string connectionString = "Server=localhost,1433;Database=balta;User ID=sa;Password=1q2w3e4r@#$;TrustServerCertificate=True";
 
             //Criando a conexão com o banco
             SqlConnection conn = new SqlConnection();

@@ -13,11 +13,12 @@ namespace ExemploDataAccessDapper.Repository
 {
     public class Repository
     {
-        Connection.Connection conn = new Connection.Connection();
-        public Repository() 
-        {
-            
-        }
+        private Connection.Connection conn = new Connection.Connection();
+        private readonly SqlConnection _sqlConnection;
+
+        // => serve para substituir as chaves caso o método tenha apenas uma linha
+        public Repository()
+         => _sqlConnection = conn.OpenConection(); //Realizando a conexão com o banco
 
         //Inserindo um item no banco
         public bool InsertCategory(Category category)
@@ -27,28 +28,24 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query
                 var insertSql = "INSERT INTO [Category] VALUES (@id, @title, @url, @summary, @order, @description, @featured)";
 
-                //Abrindo a conexão
-                using (var connection = conn.OpenConection())
+                //Executando a query e passando os parametros
+                var rows = _sqlConnection.Execute(insertSql, new
                 {
-                    //Executando a query e passando os parametros
-                    var rows = connection.Execute(insertSql, new
-                    {
-                        category.Id,
-                        category.Title,
-                        category.Url,
-                        category.Summary,
-                        category.Order,
-                        category.Description,
-                        category.Featured
-                    });
+                    category.Id,
+                    category.Title,
+                    category.Url,
+                    category.Summary,
+                    category.Order,
+                    category.Description,
+                    category.Featured
+                });
 
-                    if (rows > 0)
-                    {
-                        return true;
-                    }
-
-                    return false;
+                if (rows > 0)
+                {
+                    return true;
                 }
+
+                return false;
             }
             catch(Exception ex) 
             {
@@ -64,11 +61,8 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query
                 var insertSql = "INSERT INTO [Category] VALUES (@id, @title, @url, @summary, @order, @description, @featured)";
 
-                //Abrindo a conexão
-                using (var connection = conn.OpenConection())
-                {
-                    //Executando a query e passando os parametros
-                    var rows = connection.Execute(insertSql, new[] {
+                //Executando a query e passando os parametros
+                var rows = _sqlConnection.Execute(insertSql, new[] {
                         new
                     {
                         categorys[0].Id,
@@ -89,15 +83,15 @@ namespace ExemploDataAccessDapper.Repository
                         categorys[1].Description,
                         categorys[1].Featured
                     }
-                    }); 
+                    });
 
-                    if (rows > 0)
-                    {
-                        return true;
-                    }
-
-                    return false;
+                if (rows > 0)
+                {
+                    return true;
                 }
+
+                return false;
+
             }
             catch (Exception ex)
             {
@@ -113,27 +107,23 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query  
                 var updateSql = "UPDATE [Category] SET [Title] = @title, [Url] = @url, [Summary] = @summary, [Order] = @order, [Description] = @description, [Featured] = @featured WHERE [Id] = @id";
 
-                //Realizando a conexão com o banco 
-                using (var connection = conn.OpenConection())
+                //Executando a query e passando os parametros
+                var rows = _sqlConnection.Execute(updateSql, new
                 {
-                    //Executando a query e passando os parametros
-                    var rows = connection.Execute(updateSql, new
-                    {
-                        category.Id,
-                        category.Title,
-                        category.Url,
-                        category.Summary,
-                        category.Order,
-                        category.Description,
-                        category.Featured
-                    });
+                    category.Id,
+                    category.Title,
+                    category.Url,
+                    category.Summary,
+                    category.Order,
+                    category.Description,
+                    category.Featured
+                });
 
-                    if (rows > 0)
-                    {
-                        return true;
-                    }
-                    return false;
+                if (rows > 0)
+                {
+                    return true;
                 }
+                return false;
             }
             catch (Exception ex)
             {
@@ -149,11 +139,8 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query  
                 var updateSql = "UPDATE [Category] SET [Title] = @title, [Url] = @url, [Summary] = @summary, [Order] = @order, [Description] = @description, [Featured] = @featured WHERE [Id] = @id";
 
-                //Realizando a conexão com o banco 
-                using (var connection = conn.OpenConection())
-                {
-                    //Executando a query e passando os parametros
-                    var rows = connection.Execute(updateSql, new[] {
+                //Executando a query e passando os parametros
+                var rows = _sqlConnection.Execute(updateSql, new[] {
                         new
                         {
                             categorys[0].Id,
@@ -176,12 +163,11 @@ namespace ExemploDataAccessDapper.Repository
                         }
                     });
 
-                    if (rows > 0)
-                    {
-                        return true;
-                    }
-                    return false;
+                if (rows > 0)
+                {
+                    return true;
                 }
+                return false;
             }
             catch (Exception ex)
             {
@@ -197,19 +183,15 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query
                 var deleteSql = "DELETE FROM [Category] WHERE [Id] = @id";
 
-                //Realizando a conexão com o banco 
-                using (var connection = conn.OpenConection())
+                //Executando a query
+                var rows = _sqlConnection.Execute(deleteSql, new { id });
+
+                if (rows > 0)
                 {
-                    //Executando a query
-                    var rows = connection.Execute(deleteSql, new {id});
-
-                    if (rows > 0)
-                    {
-                        return true;
-                    }
-
-                    return false;
+                    return true;
                 }
+
+                return false;
             }
             catch (Exception ex)
             {
@@ -226,19 +208,15 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query
                 var deleteSql = "DELETE FROM [Category] WHERE [Id] = @id";
 
-                //Realizando a conexão com o banco 
-                using (var connection = conn.OpenConection())
+                //Executando a query
+                var rows = _sqlConnection.Execute(deleteSql, new[] { new { categorys[0].Id }, new { categorys[1].Id } });
+
+                if (rows > 0)
                 {
-                    //Executando a query
-                    var rows = connection.Execute(deleteSql, new[] { new { categorys[0].Id }, new { categorys[1].Id } });
-
-                    if (rows > 0)
-                    {
-                        return true;
-                    }
-
-                    return false;
+                    return true;
                 }
+
+                return false;
             }
             catch (Exception ex)
             {
@@ -248,19 +226,15 @@ namespace ExemploDataAccessDapper.Repository
         }
 
         //Selecionando uma lista no banco
-        public List<Category> SelectListCategory()
+        public IEnumerable<Category> SelectListCategory()
         {
             try
             {
                 //Criando a query
                 var selectListSql = "SELECT [Id], [Title], [Url], [Summary], [Order], [Description], [Featured]  FROM [Category]";
 
-                //Realizando a conexão com o banco 
-                using (var connection = conn.OpenConection())
-                {
-                    //Quando o retorno da query é uma lista voce utiliza o "Query<>"
-                    return (List<Category>)connection.Query<Category>(selectListSql);;
-                }
+                //Quando o retorno da query é uma lista voce utiliza o "Query<>"
+                return _sqlConnection.Query<Category>(selectListSql); ;
             }
             catch (Exception ex)
             {
@@ -276,12 +250,8 @@ namespace ExemploDataAccessDapper.Repository
                 //Criando a query
                 var selectListSql = "SELECT [Id], [Title], [Url], [Summary], [Order], [Description], [Featured]  FROM [Category] WHERE [Id] = @id";
 
-                //Realizando a conexão com o banco 
-                using (var connection = conn.OpenConection())
-                {
-                    //Quando o retorno da query é uma lista voce utiliza o "Query<>"
-                    return connection.QueryFirst<Category>(selectListSql, new { id });
-                }
+                //Quando o retorno da query é uma lista voce utiliza o "Query<>"
+                return _sqlConnection.QueryFirst<Category>(selectListSql, new { id });
             }
             catch (Exception ex)
             {
